@@ -1,15 +1,16 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 import socketio
 from routers import sessions, ai_agent, containers, tunnels
 from database import engine
 import models
 
 models.Base.metadata.create_all(bind=engine)
-
-load_dotenv()
 
 app = FastAPI(title="Ghost Labs Backend")
 

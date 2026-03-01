@@ -5,6 +5,7 @@ import CodeEditor from '../components/CodeEditor'
 import FileExplorer from '../components/FileExplorer'
 import VideoCall from '../components/VideoCall'
 import AIAssistant from '../components/AIAssistant'
+import SnapshotManager from '../components/SnapshotManager'
 import { useSocket } from '../hooks/useSocket'
 import './WorkspacePage.css'
 
@@ -14,6 +15,7 @@ function WorkspacePage() {
   const socket = useSocket(sessionId!)
   const [currentFile, setCurrentFile] = useState<string | null>(null)
   const [showTunnelUrl, setShowTunnelUrl] = useState(true)
+  const [showSnapshots, setShowSnapshots] = useState(false)
   const tunnelUrl = location.state?.tunnelUrl
 
   useEffect(() => {
@@ -42,7 +44,7 @@ function WorkspacePage() {
               <button className="btn-close" onClick={() => setShowTunnelUrl(false)}>×</button>
             </div>
           )}
-          <button className="btn-icon">💾 Save Snapshot</button>
+          <button className="btn-icon" onClick={() => setShowSnapshots(true)}>💾 Snapshots</button>
           <button className="btn-icon" onClick={() => setShowTunnelUrl(true)}>📤 Share</button>
         </div>
       </header>
@@ -66,6 +68,12 @@ function WorkspacePage() {
           <AIAssistant />
         </div>
       </div>
+
+      <SnapshotManager
+        sessionId={sessionId!}
+        isOpen={showSnapshots}
+        onClose={() => setShowSnapshots(false)}
+      />
     </div>
   )
 }
