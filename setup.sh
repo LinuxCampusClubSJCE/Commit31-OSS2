@@ -7,8 +7,8 @@ echo ""
 # Check prerequisites
 echo "Checking prerequisites..."
 
-if ! command -v node &> /dev/null; then
-    echo "❌ Node.js is not installed. Please install Node.js 18+"
+if ! command -v python3 &> /dev/null; then
+    echo "❌ Python 3 is not installed. Please install Python 3.11+"
     exit 1
 fi
 
@@ -17,7 +17,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-echo "✅ Node.js found: $(node --version)"
+echo "✅ Python found: $(python3 --version)"
 echo "✅ Docker found: $(docker --version)"
 echo ""
 
@@ -48,10 +48,8 @@ if [ "$choice" = "1" ]; then
     echo "✅ All services started!"
     echo ""
     echo "Access the application at:"
-    echo "  Frontend:          http://localhost:3000"
-    echo "  Backend API:       http://localhost:5000"
-    echo "  Container Manager: http://localhost:5001"
-    echo "  AI Agent:          http://localhost:5002"
+    echo "  Frontend:    http://localhost:3000"
+    echo "  Backend API: http://localhost:8000"
     echo ""
     echo "To view logs: docker-compose logs -f"
     echo "To stop: docker-compose down"
@@ -62,22 +60,11 @@ elif [ "$choice" = "2" ]; then
     echo ""
     echo "Terminal 1 - Backend:"
     echo "  cd backend"
-    echo "  npm install"
-    echo "  cp .env.example .env"
-    echo "  npm run dev"
+    echo "  pip install -r requirements.txt"
+    echo "  uvicorn main:socket_app --reload --port 8000"
     echo ""
     echo "Terminal 2 - Frontend:"
     echo "  cd frontend"
-    echo "  npm install"
-    echo "  npm run dev"
-    echo ""
-    echo "Terminal 3 - Container Manager:"
-    echo "  cd services/container-manager"
-    echo "  npm install"
-    echo "  npm run dev"
-    echo ""
-    echo "Terminal 4 - AI Agent:"
-    echo "  cd services/ai-agent"
     echo "  npm install"
     echo "  npm run dev"
     echo ""

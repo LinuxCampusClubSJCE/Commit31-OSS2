@@ -8,7 +8,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - VITE_API_URL=http://localhost:5000
+      - VITE_API_URL=http://localhost:8000
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -20,56 +20,14 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "8000:8000"
     environment:
-      - PORT=5000
+      - PORT=8000
       - FRONTEND_URL=http://localhost:3000
-      - CONTAINER_SERVICE_URL=http://container-manager:5001
-      - AI_AGENT_SERVICE_URL=http://ai-agent:5002
-      - TUNNEL_SERVICE_URL=http://tunnel-manager:5003
     volumes:
       - ./backend:/app
-      - /app/node_modules
-    depends_on:
-      - container-manager
-      - ai-agent
-      - tunnel-manager
-
-  container-manager:
-    build:
-      context: ./services/container-manager
-      dockerfile: Dockerfile
-    ports:
-      - "5001:5001"
-    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./services/container-manager:/app
-      - /app/node_modules
     privileged: true
-
-  ai-agent:
-    build:
-      context: ./services/ai-agent
-      dockerfile: Dockerfile
-    ports:
-      - "5002:5002"
-    environment:
-      - PORT=5002
-    volumes:
-      - ./services/ai-agent:/app
-      - /app/node_modules
-
-  tunnel-manager:
-    build:
-      context: ./services/tunnel-manager
-      dockerfile: Dockerfile
-    ports:
-      - "5003:5003"
-    environment:
-      - PORT=5003
-    volumes:
-      - ./services/tunnel-manager:/app
-      - /app/node_modules
     cap_add:
       - NET_ADMIN
 

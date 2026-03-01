@@ -22,26 +22,16 @@ Ghost Labs is an open-source platform that provides real-time collaborative work
 ## 🏗️ Architecture
 
 ```
-┌─────────────┐     ┌─────────────┐     ┌──────────────┐
-│   Frontend  │────▶│   Backend   │────▶│  Container   │
-│   (React)   │     │  (Express)  │     │   Manager    │
-└─────────────┘     └─────────────┘     └──────────────┘
-                            │
-                            ├──────────▶ ┌──────────────┐
-                            │            │   Tunnel     │
-                            │            │   Manager    │
-                            │            └──────────────┘
-                            │                    │
-                            ├──────────▶ ┌──────────────┐
-                            │            │  AI Agent    │
-                            │            │   Service    │
-                            │            └──────────────┘
-                            │
-                            └──────────▶ Docker Containers
-                                         (Linux Labs)
-                                               │
-                                         Cloudflared Tunnels
-                                         (Public Access)
+┌─────────────┐     ┌──────────────┐
+│   Frontend  │────▶│   Backend    │
+│   (React)   │     │  (FastAPI)   │
+└─────────────┘     └──────────────┘
+                           │
+                           ├──────────▶ Docker Containers
+                           │            (Linux Labs)
+                           │
+                           └──────────▶ Cloudflared Tunnels
+                                        (Public Access)
 ```
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
@@ -50,10 +40,10 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
 
 ### Prerequisites
 
-- Node.js 18+
+- Python 3.11+
+- Node.js 18+ (for frontend)
 - Docker and Docker Compose
 - Git
-- cloudflared (for tunnel functionality)
 
 ### Installation
 
@@ -63,64 +53,27 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
    cd Ghost-Labs
    ```
 
-2. **Install cloudflared**
-   
-   **Linux:**
-   ```bash
-   wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-   sudo dpkg -i cloudflared-linux-amd64.deb
-   ```
-   
-   **macOS:**
-   ```bash
-   brew install cloudflare/cloudflare/cloudflared
-   ```
-   
-   **Windows:** Download from [cloudflared releases](https://github.com/cloudflare/cloudflared/releases)
-
-3. **Build OS workspace images**
-   ```bash
-   cd docker/os-images
-   chmod +x build-all.sh
-   ./build-all.sh
-   cd ../..
-   ```
-
-4. **Start all services with Docker Compose**
+2. **Start with Docker Compose**
    ```bash
    docker-compose up -d
    ```
 
-5. **Access the application**
+3. **Access the application**
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
-   - Container Manager: http://localhost:5001
-   - AI Agent: http://localhost:5002
-   - Tunnel Manager: http://localhost:5003
+   - Backend API: http://localhost:8000
 
 ### Manual Setup (Development)
 
 If you prefer to run services individually:
 
 ```bash
-# Frontend
-cd frontend
-npm install
-npm run dev
-
 # Backend
 cd backend
-npm install
-cp .env.example .env
-npm run dev
+pip install -r requirements.txt
+uvicorn main:socket_app --reload --port 8000
 
-# Container Manager
-cd services/container-manager
-npm install
-npm run dev
-
-# AI Agent
-cd services/ai-agent
+# Frontend
+cd frontend
 npm install
 npm run dev
 ```
@@ -135,15 +88,10 @@ Ghost-Labs/
 │   │   ├── pages/          # Page components
 │   │   └── hooks/          # Custom hooks
 │   └── package.json
-├── backend/                 # Express backend
-│   ├── src/
-│   │   ├── routes/         # API routes
-│   │   └── socket/         # Socket.io handlers
-│   └── package.json
-├── services/
-│   ├── container-manager/  # Docker container management
-│   ├── tunnel-manager/     # Cloudflared tunnel management
-│   └── ai-agent/           # AI assistant service
+├── backend/                 # FastAPI monolithic backend
+│   ├── main.py              # Entry point & Socket.io
+│   ├── routers/             # API routes (sessions, ai, containers, tunnels)
+│   └── requirements.txt
 ├── docker/
 │   ├── os-images/          # Multiple OS Dockerfiles
 │   └── workspace/          # Default Alpine workspace
@@ -171,16 +119,15 @@ Ghost-Labs/
 - WebRTC (video/audio)
 
 ### Backend
-- Node.js 18
-- Express.js
-- Socket.io
-- JWT authentication
-- SQLite database
+- Python 3.11
+- FastAPI
+- python-socketio
+- Docker SDK for Python
+- SQLite (planned)
 
 ### Infrastructure
 - Docker (containerization)
 - Multiple Linux distributions (Alpine, Ubuntu, Debian, Fedora, Arch)
-- dockerode (Docker API)
 - cloudflared (secure tunneling)
 
 ## 🤝 Contributing
@@ -188,25 +135,9 @@ Ghost-Labs/
 We welcome contributions from developers of all skill levels! This project is specifically designed to be beginner-friendly.
 
 Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for:
-- 12 beginner-friendly issues to get started
 - Development setup guide
 - Code style guidelines
 - Git workflow
-
-### Good First Issues
-
-1. Integrate xterm.js for terminal emulator
-2. Add Monaco Editor for code editing
-3. Implement file tree component
-4. Add WebRTC video communication
-5. Create snapshot save/restore UI
-6. Add simple chat feature
-7. Implement basic authentication
-8. Integrate OpenAI API
-9. Add database with SQLite
-10. Connect terminal to Docker container
-11. Build and test OS images
-12. Test cloudflared tunnel creation
 
 ## 📝 License
 

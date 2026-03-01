@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+python-socketio
+python-dotenv
+docker
+requests
+jinja2
+sqlalchemy
