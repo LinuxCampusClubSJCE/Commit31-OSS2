@@ -34,7 +34,7 @@ Ghost Labs is an open-source platform that provides real-time collaborative work
                                         (Public Access)
 ```
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
+See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed architecture documentation.
 
 ## 🚀 Quick Start
 
@@ -95,9 +95,13 @@ Ghost-Labs/
 ├── docker/
 │   ├── os-images/          # Multiple OS Dockerfiles
 │   └── workspace/          # Default Alpine workspace
-├── docker-compose.yml
-├── ARCHITECTURE.md         # Architecture documentation
-└── CONTRIBUTING.md         # Contribution guidelines
+├── docs/                    # Documentation files
+│   ├── ARCHITECTURE.md     # Architecture documentation
+│   ├── CONTRIBUTING.md     # Contribution guidelines
+│   ├── CLOUDFLARED_IMPLEMENTATION.md
+│   ├── PROJECT_SUMMARY.md
+│   └── SETUP.md
+└── docker-compose.yml
 ```
 
 ## 🎯 Use Cases
@@ -134,7 +138,7 @@ Ghost-Labs/
 
 We welcome contributions from developers of all skill levels! This project is specifically designed to be beginner-friendly.
 
-Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for:
+Check out our [CONTRIBUTING.md](docs/CONTRIBUTING.md) for:
 - Development setup guide
 - Code style guidelines
 - Git workflow
