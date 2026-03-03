@@ -4,8 +4,8 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/Ghost-Labs.git
-cd Ghost-Labs
+git clone https://github.com/LinuxCampusClubSJCE/Commit31-OSS2.git
+cd Commit31-OSS2
 ```
 
 ### 2. Start Everything
@@ -30,7 +30,7 @@ npm run dev
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn main:socket_app --reload --port 8000
+uvicorn main:app --reload --port 8000
 ```
 
 ## Docker Commands

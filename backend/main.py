@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 import socketio
 from routers import sessions, ai_agent, containers, tunnels
 from database import engine
-import models
+from database import Base
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 load_dotenv()
 
