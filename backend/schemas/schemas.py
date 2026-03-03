@@ -1,6 +1,6 @@
 #Add the pydantic models for the schemas here
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class Token(BaseModel):
@@ -9,3 +9,14 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: int | None = None
+
+class UserBase(BaseModel):
+    username: str
+
+class UserCreate(UserBase):
+    password: str
+
+class UserOut(UserBase):
+    id: int
+    
+    model_config = ConfigDict(from_attributes=True)
