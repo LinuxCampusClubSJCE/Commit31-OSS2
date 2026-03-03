@@ -36,7 +36,7 @@ FRONTEND_URL=http://localhost:3000
 Run the server with Uvicorn:
 
 ```bash
-uvicorn main:socket_app --reload --port 8000
+uvicorn main:app --reload --port 8000
 ```
 
 The API will be available at `http://localhost:8000`.
