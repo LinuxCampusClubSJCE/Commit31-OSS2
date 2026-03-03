@@ -5,7 +5,7 @@ import uuid
 from typing import List, Optional, Any
 import datetime
 
-from database import get_db
+from database.database import get_db
 import models
 
 router = APIRouter()

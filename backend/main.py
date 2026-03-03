@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import socketio
 from routers import sessions, ai_agent, containers, tunnels
-from database import engine
-from database import Base
+from database.database import engine
+from models.models import Base
 
 Base.metadata.create_all(bind=engine)
 
