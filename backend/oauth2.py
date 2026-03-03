@@ -10,10 +10,12 @@ from models import models
 from database import database
 from schemas import schemas
 
+from config import settings
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-SECRET_KEY = "random"
-ALGORITHM = "HS256"
+
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
