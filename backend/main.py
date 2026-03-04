@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import socketio
-from routers import sessions, ai_agent, containers, tunnels
+from routers import sessions, ai_agent, containers, tunnels, auth
 from database.database import engine
 from models.models import Base
 
@@ -31,6 +31,7 @@ app.include_router(sessions.router, prefix="/api/sessions", tags=["sessions"])
 app.include_router(ai_agent.router, prefix="/api/ai", tags=["ai"])
 app.include_router(containers.router, prefix="/api/containers", tags=["containers"])
 app.include_router(tunnels.router, prefix="/api/tunnels", tags=["tunnels"])
+app.include_router(auth.router, tags=["authentication"])
 
 @app.get("/health")
 async def health_check():
